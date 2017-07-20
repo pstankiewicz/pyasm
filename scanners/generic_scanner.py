@@ -5,7 +5,7 @@ class GenericScanner(object):
         self.parsed_data = []
         self.line_index = 1
         self.column_index = 1
-        self.data_index = 0
+        self.data_index = -1
 
     def read_file(self, filename):
         with open(filename) as f:
@@ -35,3 +35,11 @@ class GenericScanner(object):
             '\t': 'TAB',
         }
         return NORMALS.get(char, char)
+
+    def next(self):
+        self.data_index += 1
+        return self.parsed_data[self.data_index]
+
+    def prev(self):
+        self.data_index -= 1
+        return self.parsed_data[self.data_index]

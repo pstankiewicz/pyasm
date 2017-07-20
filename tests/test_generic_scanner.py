@@ -100,3 +100,38 @@ class TestGenericScanner(unittest.TestCase):
         # Act & Assert
         for key, value in check_table.items():
             self.assertEqual(value, self.scanner.normalize(key))
+
+    def test_scanner_should_return_next_element(self):
+        # Arrange
+        parsed_result = [
+            [1, 1, 'NEWLINE'],
+            [2, 1, 'e'],
+        ]
+
+        # Act
+        self.scanner.read_file(self.filename)
+
+        # Assert
+        for element in parsed_result:
+            self.assertEqual(self.scanner.next(), element)
+
+    def test_scanner_should_return_next_and_prev_element(self):
+        # Arrange
+        parsed_next_result = [
+            [1, 1, 'NEWLINE'],
+            [2, 1, 'e'],
+        ]
+
+        parsed_prev_result = [
+            [1, 1, 'NEWLINE'],
+        ]
+
+        # Act
+        self.scanner.read_file(self.filename)
+
+        # Assert
+        for element in parsed_next_result:
+            self.assertEqual(self.scanner.next(), element)
+
+        for element in parsed_prev_result:
+            self.assertEqual(self.scanner.prev(), element)
